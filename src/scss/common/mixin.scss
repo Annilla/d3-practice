@@ -1,0 +1,15 @@
+// Media Queries mixin
+@mixin screen($point) {
+  @if $point == sm { // ≥ 568px
+    @media screen and (min-width: $sm) { @content; }
+  }
+  @else if $point == md { // ≥ 768px
+    @media screen and (min-width: $md) { @content; }
+  }
+  @else if $point == lg { // ≥ 1024px
+    @media screen and (min-width: $lg) { @content; }
+  }
+  @else if $point == xl { // ≥ 1280px
+    @media screen and (min-width: $xl) { @content; }
+  }
+}

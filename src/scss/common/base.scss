@@ -1,0 +1,38 @@
+// css reset
+html {
+	-ms-text-size-adjust: 100%;
+	-webkit-text-size-adjust: 100%;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+body {
+	margin: 0;
+	font-family: $font_body;
+	font-size: 1em;
+	text-align: justify;
+	overflow-x: hidden;
+	&.noscroll {
+		overflow: hidden;
+	}
+}
+
+h1, h2, h3, h4, p, blockquote, figure, ol, ul {
+	margin: 0;
+	padding: 0;
+}
+
+h1, h2, h3, h4 { 
+	font-size: inherit;
+}
+
+a {
+	color: inherit;
+	cursor: pointer;
+	text-decoration: none;
+	transition: all 0.5s;
+}
+
+img {
+	border: 0;
+}

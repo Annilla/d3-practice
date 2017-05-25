@@ -1,0 +1,46 @@
+// hide elements
+.hide {
+  display: none;
+}
+.hide-sm {
+  @include screen(sm) {
+    display: none;
+  }
+}
+.hide-md {
+  @include screen(md) {
+    display: none;
+  }
+}
+.hide-lg {
+  @include screen(lg) {
+    display: none;
+  }
+}
+.hide-xl {
+  @include screen(xl) {
+    display: none;
+  }
+}
+
+// show elements
+.show-sm {
+  @include screen(sm) {
+    display: block;
+  }
+}
+.show-md {
+  @include screen(md) {
+    display: block;
+  }
+}
+.show-lg {
+  @include screen(lg) {
+    display: block;
+  }
+}
+.show-xl {
+  @include screen(xl) {
+    display: block;
+  }
+}
