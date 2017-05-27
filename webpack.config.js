@@ -57,6 +57,11 @@ module.exports = {
       filename: './donut.html',
       template: './src/pug/page/donut.pug'
     }),
+    new HtmlWebpackPlugin({
+      hash: true,
+      filename: './line.html',
+      template: './src/pug/page/line.pug'
+    }),
     new ExtractTextPlugin({
       filename: 'app.css',
       disable: false,
