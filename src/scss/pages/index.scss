@@ -1,0 +1,17 @@
+.index {
+  h1 {
+    font-size: 40px;
+    text-indent: 30px;
+  }
+  ul.list {
+    margin: 0 auto;
+    li {
+      list-style: circle;
+      margin: 0 0 0 30px;
+      a {
+        font-size: 24px;
+        text-decoration: underline;
+      }
+    }
+  }
+}
