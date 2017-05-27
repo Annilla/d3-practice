@@ -9,7 +9,9 @@ if (DEV_MODE) {
     '/': require('./pages/index')['default'],
     '/index.html': require('./pages/index')['default'],
     // 圓餅圖
-    '/pie.html': require('./pages/pie')['default']
+    '/pie.html': require('./pages/pie')['default'],
+    // 甜甜圈圖
+    '/donut.html': require('./pages/donut')['default']
   };
 }
 else {
@@ -19,7 +21,9 @@ else {
     '/d3-practice/dist/': require('./pages/index')['default'],
     '/d3-practice/dist/index.html': require('./pages/index')['default'],
     // 圓餅圖
-    '/d3-practice/dist/pie.html': require('./pages/pie')['default']
+    '/d3-practice/dist/pie.html': require('./pages/pie')['default'],
+    // 甜甜圈圖
+    '/d3-practice/dist/donut.html': require('./pages/donut')['default']
   };
 }
 

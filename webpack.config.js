@@ -52,6 +52,11 @@ module.exports = {
       filename: './pie.html',
       template: './src/pug/page/pie.pug'
     }),
+    new HtmlWebpackPlugin({
+      hash: true,
+      filename: './donut.html',
+      template: './src/pug/page/donut.pug'
+    }),
     new ExtractTextPlugin({
       filename: 'app.css',
       disable: false,
