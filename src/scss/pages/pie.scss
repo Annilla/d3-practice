@@ -1,0 +1,31 @@
+.pie {
+  h1 {
+    font-size: 30px;
+    margin: 30px 0;
+    text-align: center;
+  }
+  .chart {
+    width: 100%;
+    margin: 0 auto;
+    position: relative;
+    @include screen(md) {
+      width: 600px;
+    }
+    .tooltip {
+      min-width: 100px;
+      background-color: $black_90;
+      color: $white;
+      padding: 10px;
+      border-radius: 6px;
+      position: absolute;
+      z-index: 1;
+      visibility: hidden;
+      @include screen(lg) {
+        visibility: visible;
+      }
+      &.hidden {
+        visibility: hidden;
+      }
+    }
+  }
+}

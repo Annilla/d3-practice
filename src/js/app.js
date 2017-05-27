@@ -2,8 +2,7 @@
 require('../scss/app.scss');
 
 // Plugin JS
-// window.Cookies = require('js-cookie');
-// require('jquery');
+window.axios = require('axios');
 
 // Main JS
 import router from './router';

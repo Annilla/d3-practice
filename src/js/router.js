@@ -8,6 +8,8 @@ if (DEV_MODE) {
     // 首頁
     '/': require('./pages/index')['default'],
     '/index.html': require('./pages/index')['default'],
+    // 圓餅圖
+    '/pie.html': require('./pages/pie')['default']
   };
 }
 else {
@@ -16,6 +18,8 @@ else {
     // 首頁
     '/d3-practice/dist/': require('./pages/index')['default'],
     '/d3-practice/dist/index.html': require('./pages/index')['default'],
+    // 圓餅圖
+    '/d3-practice/dist/pie.html': require('./pages/pie')['default']
   };
 }
 
