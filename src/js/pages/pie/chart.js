@@ -17,10 +17,10 @@ let canvas = {
   percentage: function () {
     // 計算百分比
     let data = this.sample;
-    let total = d3.sum(data, function(d) { return d.件數; });
+    let total = d3.sum(data, function(d) { return d.value; });
     let format =  d3.format(".0p");
     this.sample.forEach(function(el){
-        el.percentage = format(el.件數 / total);
+        el.percentage = format(el.value / total);
     });
   },
   init: function () {
@@ -39,7 +39,7 @@ let canvas = {
     // 建立 D3 pie 物件
     let pie = d3.pie()
       .sort(null)
-      .value(function(d) { return d.件數; })
+      .value(function(d) { return d.value; })
       (data);
 
     // 繪製 path
@@ -97,7 +97,7 @@ let canvas = {
       .attr('fill', function(d,i){ return color(i); });
     this.labeltexts.append('tspan')
       .text(function(d){
-        return  d.區名;
+        return  d.name;
       });
     this.labeltexts.append('tspan')
       .text(function(d){
@@ -117,8 +117,8 @@ let canvas = {
         .style('left', `${xPos}px`)
         .style('top', `${yPos}px`);
       // 插入名稱
-      d3.select('.tooltip .name').html(`${d.data.區名} / ${d.data.percentage}`);
-      d3.select('.tooltip .value').html(`${d.data.件數} 件`);
+      d3.select('.tooltip .name').html(`${d.data.name} / ${d.data.percentage}`);
+      d3.select('.tooltip .value').html(`${d.data.value} 件`);
     }).on('mouseout', function(d){
       // 切換顯示及隱藏
       d3.select(tooltip).classed('hidden', true);
@@ -129,17 +129,13 @@ let canvas = {
 
 export function chart() {
   // Get Data
-  axios.get('//data.kcg.gov.tw/api/action/datastore_search', {
-      params: {
-        resource_id: 'c98b2f4a-6df3-4d1d-99a9-5ddeca349d30'
-      }
-    })
+  axios.get('//teststset.getsandbox.com/d3data')
     .then(function (response) {
       // 過濾小於 100 大於 500 的數據
-      let data = response.data.result.records;
+      let data = response.data.result;
       let newdata = [];
       data.forEach(function(element) {
-        if (element.件數 > 100 && element.件數 < 500) {
+        if (element.value > 100 && element.value < 500) {
           newdata.push(element);
         }
       });
