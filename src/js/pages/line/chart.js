@@ -1,16 +1,23 @@
 import * as d3 from "d3";
 window.axios = require('axios');
 
+function numberArray (obj) {
+  let newdata = [];
+  obj.forEach(function(element){
+    newdata.push(element.number);
+  });
+  console.log(newdata);
+  return newdata;
+}
+
 let canvas = {
   sample: {},
   svg: {},
-  line: {},
   xScale: {},
   yScale: {},
-  xAxis: {},
-  yAxis: {},
   dots: {},
   path: {},
+  labels: {},
   config: {
     svgW: 500,
     svgH: 500,
@@ -18,14 +25,6 @@ let canvas = {
     right: 30,
     bottom: 100,
     left: 60
-  },
-  dotdata: function () {
-    let data = this.sample[0].value;
-    let newdata = [];
-    data.forEach(function(element) {
-      newdata.push({'value': element});
-    });
-    return newdata;
   },
   init: function () {
     // 插入 SVG
@@ -40,41 +39,34 @@ let canvas = {
     this.rendor();
   },
   bind: function () {
-    let dataset = this.sample[0].value;
-    let Ymax = d3.max(dataset);
-	  let Ymin = d3.min(dataset);
-    this.xScale = d3.scaleLinear().domain([0, dataset.length]).range([0, this.config.svgW]);
+    let dataset = this.sample;
+    let Ymax = 0;
+    let Ymin = 0;
+    let tickLabels = [''];
+    console.dir(dataset);
+    dataset.forEach(function (element, i) {
+      element.narray = numberArray(element.value);
+      let max = d3.max(element.narray);
+      Ymax = max > Ymax ? max : Ymax;
+    });
+    dataset[0].value.forEach(function (element) {
+      tickLabels.push(element.month);
+    });
+    this.xScale = d3.scaleLinear().domain([0, dataset[0].value.length]).range([0, this.config.svgW]);
     this.yScale = d3.scaleLinear().domain([Ymin, Ymax]).range([this.config.svgH, 0]);
-    let tickLabels = ['', '6月','7月','8月','9月','10月'];
-    // 增加一個line function，用來把資料轉為x, y
-    this.line = d3.line()
-      .x((d,i) => {
-        return this.xScale(i+1); //利用尺度運算資料索引，傳回x的位置
-      })
-      .y((d) => {
-        return this.yScale(d); //利用尺度運算資料的值，傳回y的位置
-      });
     // x,y 座標 scale
-    this.xAxis = d3.axisBottom(this.xScale).ticks(5).tickFormat((d,i) => { return tickLabels[i] });
-    this.yAxis = d3.axisLeft(this.yScale).tickSizeInner(-this.config.svgH);
-    // 繪製座標點
-    this.dots = this.svg.selectAll('g.dot')
-      .data(this.dotdata())
-      .enter();
-  },
-  rendor: function () {
-    let dataset = this.sample[0].value;
-    let color = d3.scaleOrdinal(d3.schemeCategory20c);
+    let xAxis = d3.axisBottom(this.xScale).ticks(5).tickFormat((d,i) => { return tickLabels[i] });
+    let yAxis = d3.axisLeft(this.yScale).tickSizeInner(-this.config.svgH);
     // SVG 加入 x 軸線
     this.svg.append('g')
       .attr("transform", `translate(0, ${this.config.svgH})`)
       .attr('class', 'x axis')
-      .call(this.xAxis);
+      .call(xAxis);
     // SVG 加入 y 軸線
     this.svg.append('g')
       .attr("transform", `translate(0, 0)`)
       .attr('class', 'y axis')
-      .call(this.yAxis);
+      .call(yAxis);
     // SVG 加入 y 軸名稱
     this.svg.append("text")
         .attr("transform", "rotate(-90)")
@@ -83,20 +75,84 @@ let canvas = {
         .attr("dy", "1em")
         .style("text-anchor", "middle")
         .text("件數");
+    // 繪製 line
+    this.path = this.svg.selectAll('g.line')
+      .data(dataset) //將資料放入pie
+      .enter()
+      .append('g') //塞好'g'
+      .attr('class', 'line'); //準備好Class
+    // 繪製座標點
+    this.dots = this.svg.selectAll('g.dot')
+      .data(dataset)
+      .enter()
+      .append('g') //塞好'g'
+      .attr('class', 'dot') //準備好Class
+      .selectAll("circle.circle")
+      .data(function(d) { return d.value; })
+      .enter()
+      .append("circle")//塞好'circle'
+      .attr('class', 'circle'); //準備好Class
+    // 繪製 label
+    this.labels = this.svg.selectAll('g.label')
+      .data(dataset)
+      .enter()
+      .append('g') //塞好'g'
+      .attr('class', 'label');
+  },
+  rendor: function () {
+    let dataset = this.sample;
+    let color = d3.scaleOrdinal(d3.schemeCategory10);
+    let tooltip = '.tooltip';
+    let dotIndex = 0; // dot color
+    let svgH = this.config.svgH;
+    // 增加一個line function，用來把資料轉為x, y
+    let line = d3.line()
+      .x((d,i) => {
+        return this.xScale(i+1); //利用尺度運算資料索引，傳回x的位置
+      })
+      .y((d) => {
+        return this.yScale(d); //利用尺度運算資料的值，傳回y的位置
+      });
     // 將資料套用 d3.line()
-    this.path = this.svg.append('path')
-      .attr('class', '.path')
+    this.path.append('path')
       .attr('fill', 'none')
-      .attr('stroke', color(0))
-      .attr('d', this.line(dataset));
+      .attr('stroke', (d,i) => { return color(i); })
+      .attr('d', (d) => { return line(d.narray); });
     // 加入座標點
-    this.dots.append('g')
-      .attr('class', 'dot')
-      .append("circle")
-      .attr("cx",(d,i)=>{ return this.xScale(i+1); })
-      .attr("cy",(d)=>{ return this.yScale(d.value); })
+    this.dots.attr("cx",(d,i)=>{ return this.xScale(i+1); })
+      .attr("cy",(d)=>{ return this.yScale(d.number); })
       .attr("r","5")
-      .attr("fill", color(0));
+      .attr("fill", () => {
+        dotIndex ++;
+        return color(Math.floor((dotIndex-1)/5)); })
+      .attr("stroke", "white");
+    // 插入 label 標示
+    this.labels.append('circle')
+      .attr('cx', (d,i)=>{ return i*100 })
+      .attr('cy', svgH+75)
+      .attr('r', 5)
+      .attr('fill', (d,i)=>{ return color(i); });
+    this.labels.append('text')
+      .attr('x', (d,i)=>{ return i*100+10 })
+      .attr('y', svgH+80)
+      .text((d)=>{ return d.name});
+    // 滑過出現 tooltip
+    this.svg.selectAll('.circle').on('mouseover', function(d,i){
+      let mousePos = d3.mouse(this); //取得滑鼠座標
+      let xPos = mousePos[0] + 80;
+      let yPos = mousePos[1]; //修正滑鼠座標
+      // 將Tooltip補上資料
+      d3.select(tooltip)
+        .classed('hidden', false)
+        .style('left', `${xPos}px`)
+        .style('top', `${yPos}px`);
+      // 插入名稱
+      d3.select('.tooltip .name').html(`${dataset[Math.floor(i/5)].name} / ${d.month}`);
+      d3.select('.tooltip .value').html(`${d.number} 件`);
+    }).on('mouseout', function(d){
+      // 切換顯示及隱藏
+      d3.select(tooltip).classed('hidden', true);
+    });
   }
 }
 

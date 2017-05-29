@@ -32,6 +32,11 @@
             stroke: $tick;
             transform: translateX(1px);
           }
+          &:nth-child(2) {
+            line {
+              stroke: $black;
+            }
+          }
         }
       }
     }
