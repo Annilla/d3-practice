@@ -1,4 +1,4 @@
-.line {
+.barp {
   h1 {
     @include title();
   }
@@ -26,16 +26,16 @@
       }
     }
     .svg {
-      .axis.y {
+      .axis.x {
+        .domain {
+          display: none;
+        }
         .tick {
           line {
             stroke: $tick;
-            transform: translateX(1px);
-          }
-          &:nth-child(2) {
-            line {
-              stroke: $black;
-            }
+            stroke-width: 2;
+            stroke-dasharray: 1, 6;
+            stroke-linecap: round;
           }
         }
       }

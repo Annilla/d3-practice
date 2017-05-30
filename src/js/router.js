@@ -14,8 +14,10 @@ if (DEV_MODE) {
     '/donut.html': require('./pages/donut')['default'],
     // 折線圖
     '/line.html': require('./pages/line')['default'],
-    // 長條圖
-    '/bar.html': require('./pages/bar')['default']
+    // 直條圖
+    '/bar.html': require('./pages/bar')['default'],
+    // 橫條圖
+    '/barp.html': require('./pages/barp')['default']
   };
 }
 else {
@@ -30,8 +32,10 @@ else {
     '/d3-practice/dist/donut.html': require('./pages/donut')['default'],
     // 折線圖
     '/d3-practice/dist/line.html': require('./pages/line')['default'],
-    // 長條圖
-    '/d3-practice/dist/bar.html': require('./pages/bar')['default']
+    // 直條圖
+    '/d3-practice/dist/bar.html': require('./pages/bar')['default'],
+    // 橫條圖
+    '/d3-practice/dist/barp.html': require('./pages/barp')['default']
   };
 }
 

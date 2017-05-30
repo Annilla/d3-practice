@@ -39,23 +39,23 @@ let canvas = {
   },
   bind: function () {
     let dataset = this.sample;
-    let Ymax = 0;
-    let max = 0; // Compare with Ymax
-    let Ymin = 0;
+    let Xmax = 0;
+    let max = 0; // Compare with Xmax
+    let Xmin = 0;
     let tickLabels = [''];
-    // Set Ymax
+    // Set Xmax
     dataset.narray = numberArray(dataset.value);
     max = d3.max(dataset.narray);
-    Ymax = max > Ymax ? max : Ymax;
+    Xmax = max > Xmax ? max : Xmax;
     // Set tickLabels
     dataset.value.forEach(function (element) {
       tickLabels.push(element.month);
     });
-    this.xScale = d3.scaleLinear().domain([0, dataset.value.length+1]).range([0, this.config.svgW]);
-    this.yScale = d3.scaleLinear().domain([Ymin, Ymax]).range([this.config.svgH, 0]);
+    this.xScale = d3.scaleLinear().domain([Xmin, Xmax]).range([0, this.config.svgH]);
+    this.yScale = d3.scaleLinear().domain([0, dataset.value.length+1]).range([this.config.svgW, 0]);
     // x,y 座標 scale
-    let xAxis = d3.axisBottom(this.xScale).ticks(5).tickFormat((d,i) => { return tickLabels[i] });
-    let yAxis = d3.axisLeft(this.yScale).tickSizeInner(-this.config.svgH);
+    let xAxis = d3.axisBottom(this.xScale).tickSizeInner(-this.config.svgW);
+    let yAxis = d3.axisLeft(this.yScale).ticks(5).tickFormat((d,i) => { return tickLabels[i] });
     // SVG 加入 x 軸線
     this.svg.append('g')
       .attr("transform", `translate(0, ${this.config.svgH})`)
@@ -68,9 +68,8 @@ let canvas = {
       .call(yAxis);
     // SVG 加入 y 軸名稱
     this.svg.append("text")
-        .attr("transform", "rotate(-90)")
-        .attr("y", 0 - this.config.left)
-        .attr("x",0 - (this.config.svgH / 2))
+        .attr("y", this.config.svgH + 30)
+        .attr("x", this.config.svgW/2)
         .attr("dy", "1em")
         .style("text-anchor", "middle")
         .text("件數");
@@ -97,33 +96,33 @@ let canvas = {
   rendor: function () {
     let dataset = this.sample;
     let color = d3.scaleOrdinal(d3.schemeCategory10);
-    let barWidth = this.config.barW;
+    let barHeight = this.config.barW;
     let tooltip = '.tooltip';
     // 將資料套用 d3.line()
     this.bars.attr('fill', color(0))
-      .attr('x', (d,i) => { return this.xScale(i+1) - barWidth/2; })
-      .attr('y', (d) => { return this.yScale(d.number); })
-      .attr('width', barWidth)
-      .attr('height', (d) => { return this.config.svgH - this.yScale(d.number); });
+      .attr('x', 0)
+      .attr('y', (d,i) => { return this.yScale(i+1) - barHeight/2; })
+      .attr('width', (d) => { return this.xScale(d.number); })
+      .attr('height', barHeight)
     // 插入 texts 標示
     this.texts.attr('fill', 'white')
       .attr('text-anchor', 'middle')
-      .attr('x', (d,i)=>{ return this.xScale(i+1) })
-      .attr('y', (d) => { return this.yScale(d.number)+20; })
+      .attr('y', (d,i)=>{ return this.yScale(i+1)+5 })
+      .attr('x', (d) => { return this.xScale(d.number)-20; })
       .text((d)=>{ return d.number});
     // 插入 label 標示
     this.labels.append('rect')
       .attr('class','labelrect')
       .attr('fill', color(0))
       .attr('x', 0)
-      .attr('y', this.config.svgH + 40)
+      .attr('y', -this.config.top + 10)
       .attr('width', '10')
       .attr('height', '10');
     this.labels.append('text')
       .attr('class','labeltext')
       .attr('fill', color(0))
       .attr('x', 15)
-      .attr('y', this.config.svgH + 50)
+      .attr('y', -this.config.top + 10 + 10)
       .text(dataset.name);
     // 滑過出現 tooltip
     this.svg.selectAll('.bar').on('mouseover', function(d,i){

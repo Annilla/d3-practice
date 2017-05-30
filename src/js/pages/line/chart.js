@@ -29,8 +29,7 @@ let canvas = {
     // 插入 SVG
     this.svg = d3.select('.chart').append('svg')
       .attr('class', 'svg')
-      .attr('width', this.config.svgW + this.config.left + this.config.right) //將左右補滿
-      .attr('height', this.config.svgH + this.config.top + this.config.bottom) //上下補滿
+      .attr('viewBox', `0 0 ${this.config.svgW + this.config.left + this.config.right} ${this.config.svgH + this.config.top + this.config.bottom}`)
       .append('g') //增加一個群組g
       .attr('transform', 'translate(' + this.config.left + ',' + this.config.top + ')');
     // 繼續進行資料綁定和繪製
