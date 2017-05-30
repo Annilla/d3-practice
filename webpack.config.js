@@ -62,6 +62,11 @@ module.exports = {
       filename: './line.html',
       template: './src/pug/page/line.pug'
     }),
+    new HtmlWebpackPlugin({
+      hash: true,
+      filename: './bar.html',
+      template: './src/pug/page/bar.pug'
+    }),
     new ExtractTextPlugin({
       filename: 'app.css',
       disable: false,

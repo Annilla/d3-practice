@@ -1,0 +1,16 @@
+extends ../common/base.pug
+
+include ../common/meta.mixin.pug
+block meta.seo
+  +seo(
+  'D3 練習 - 長條圖',
+  'd3, javascript, data, visualization',
+  'Anny 的 D3 練習')
+
+block main
+  main.bar
+    h1 高雄市鼓山區不動產買賣統計(104年6-10月)
+    .chart
+      .tooltip.hidden
+        .name 鼓山區 / 10月
+        .value 214 件

@@ -13,7 +13,9 @@ if (DEV_MODE) {
     // 甜甜圈圖
     '/donut.html': require('./pages/donut')['default'],
     // 折線圖
-    '/line.html': require('./pages/line')['default']
+    '/line.html': require('./pages/line')['default'],
+    // 長條圖
+    '/bar.html': require('./pages/bar')['default']
   };
 }
 else {
@@ -27,7 +29,9 @@ else {
     // 甜甜圈圖
     '/d3-practice/dist/donut.html': require('./pages/donut')['default'],
     // 折線圖
-    '/d3-practice/dist/line.html': require('./pages/line')['default']
+    '/d3-practice/dist/line.html': require('./pages/line')['default'],
+    // 長條圖
+    '/d3-practice/dist/bar.html': require('./pages/bar')['default']
   };
 }
 
