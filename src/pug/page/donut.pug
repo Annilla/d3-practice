@@ -1,0 +1,16 @@
+extends ../common/base.pug
+
+include ../common/meta.mixin.pug
+block meta.seo
+  +seo(
+  'D3 練習 - 甜甜圈圖',
+  'd3, javascript, data, visualization',
+  'Anny 的 D3 練習')
+
+block main
+  main.pie
+    h1 高雄市不動產買賣統計(104年6月)
+    .chart
+      .tooltip.hidden
+        .name 左營區 / 20%
+        .value 214 件

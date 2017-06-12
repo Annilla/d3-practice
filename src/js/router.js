@@ -8,6 +8,16 @@ if (DEV_MODE) {
     // 首頁
     '/': require('./pages/index')['default'],
     '/index.html': require('./pages/index')['default'],
+    // 圓餅圖
+    '/pie.html': require('./pages/pie')['default'],
+    // 甜甜圈圖
+    '/donut.html': require('./pages/donut')['default'],
+    // 折線圖
+    '/line.html': require('./pages/line')['default'],
+    // 直條圖
+    '/bar.html': require('./pages/bar')['default'],
+    // 橫條圖
+    '/barp.html': require('./pages/barp')['default']
   };
 }
 else {
@@ -16,6 +26,16 @@ else {
     // 首頁
     '/d3-practice/dist/': require('./pages/index')['default'],
     '/d3-practice/dist/index.html': require('./pages/index')['default'],
+    // 圓餅圖
+    '/d3-practice/dist/pie.html': require('./pages/pie')['default'],
+    // 甜甜圈圖
+    '/d3-practice/dist/donut.html': require('./pages/donut')['default'],
+    // 折線圖
+    '/d3-practice/dist/line.html': require('./pages/line')['default'],
+    // 直條圖
+    '/d3-practice/dist/bar.html': require('./pages/bar')['default'],
+    // 橫條圖
+    '/d3-practice/dist/barp.html': require('./pages/barp')['default']
   };
 }
 

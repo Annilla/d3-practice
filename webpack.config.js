@@ -47,6 +47,31 @@ module.exports = {
       filename: './index.html',
       template: './src/pug/index.pug'
     }),
+    new HtmlWebpackPlugin({
+      hash: true,
+      filename: './pie.html',
+      template: './src/pug/page/pie.pug'
+    }),
+    new HtmlWebpackPlugin({
+      hash: true,
+      filename: './donut.html',
+      template: './src/pug/page/donut.pug'
+    }),
+    new HtmlWebpackPlugin({
+      hash: true,
+      filename: './line.html',
+      template: './src/pug/page/line.pug'
+    }),
+    new HtmlWebpackPlugin({
+      hash: true,
+      filename: './bar.html',
+      template: './src/pug/page/bar.pug'
+    }),
+    new HtmlWebpackPlugin({
+      hash: true,
+      filename: './barp.html',
+      template: './src/pug/page/barp.pug'
+    }),
     new ExtractTextPlugin({
       filename: 'app.css',
       disable: false,

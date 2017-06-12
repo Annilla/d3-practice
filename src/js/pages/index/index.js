@@ -1,8 +1,3 @@
-// import { topSlider } from './topSlider.js';
-
-const booting = function() {
-  // TOP SLIDER
-  // topSlider();
-};
+const booting = function() {};
 
 export default booting;

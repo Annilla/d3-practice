@@ -1,0 +1,44 @@
+.line {
+  h1 {
+    @include title();
+  }
+  .chart {
+    width: 100%;
+    margin: 0 auto;
+    position: relative;
+    @include screen(md) {
+      width: 650px;
+    }
+    .tooltip {
+      min-width: 100px;
+      background-color: $black_90;
+      color: $white;
+      padding: 10px;
+      border-radius: 6px;
+      position: absolute;
+      z-index: 1;
+      visibility: hidden;
+      @include screen(lg) {
+        visibility: visible;
+      }
+      &.hidden {
+        visibility: hidden;
+      }
+    }
+    .svg {
+      .axis.y {
+        .tick {
+          line {
+            stroke: $tick;
+            transform: translateX(1px);
+          }
+          &:nth-child(2) {
+            line {
+              stroke: $black;
+            }
+          }
+        }
+      }
+    }
+  }
+}
