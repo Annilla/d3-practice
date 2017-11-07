@@ -2,6 +2,7 @@
 require('../scss/app.scss');
 
 // Plugin JS
+require("babel-polyfill");
 window.axios = require('axios');
 
 // Main JS
