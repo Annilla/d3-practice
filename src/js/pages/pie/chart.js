@@ -29,7 +29,11 @@ let canvas = {
     // 插入 SVG
     this.svg = d3.select('.chart').append('svg')
       .attr('class', 'svg')
-      .attr('viewBox', `0 0 ${this.config.svgW} ${this.config.svgH}`);
+      .attr('viewBox', `0 0 ${this.config.svgW} ${this.config.svgH}`)
+      // Fixed for IE auto resize
+      // http://www.creativebloq.com/how-to/10-golden-rules-for-responsive-svgs
+      .attr('preserveAspectRatio', `xMidYMin slice`)
+      .attr('style', `width: 100%; padding-bottom: 100%; height: 1px; overflow: visible`);
     // 繼續進行資料綁定和繪製
     this.bind();
     this.rendor();

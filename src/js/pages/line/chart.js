@@ -30,6 +30,10 @@ let canvas = {
     this.svg = d3.select('.chart').append('svg')
       .attr('class', 'svg')
       .attr('viewBox', `0 0 ${this.config.svgW + this.config.left + this.config.right} ${this.config.svgH + this.config.top + this.config.bottom}`)
+      // Fixed for IE auto resize
+      // http://www.creativebloq.com/how-to/10-golden-rules-for-responsive-svgs
+      .attr('preserveAspectRatio', `xMidYMin slice`)
+      .attr('style', `width: 100%; padding-bottom: 100%; height: 1px; overflow: visible`)
       .append('g') //增加一個群組g
       .attr('transform', 'translate(' + this.config.left + ',' + this.config.top + ')');
     // 繼續進行資料綁定和繪製
